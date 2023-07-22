@@ -1,9 +1,21 @@
-import { legacy_createStore, applyMiddleware, combineReducers } from "redux";
-import { reducer } from "./Redux/reducer";
-import thunk from "redux-thunk";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thank from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { userReducer } from "./redux/reducers/userReducer";
 
 const rootReducer = combineReducers({
-  reducer,
+  userList: userReducer,
 });
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
+const initialState = {};
+const middleware = [thank];
+
+
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
+
+export default store;
